@@ -1,5 +1,5 @@
 import urllib.request, json
-import time , sys , random , re , platform
+import time , sys , random , re , platform, datetime
 
 
 
@@ -39,10 +39,11 @@ def number():
 
     with urllib.request.urlopen (
             "http://146.148.112.105/caller/index.php/UserManagement/search_number?number=" + num + "&country_code=SA" ) as url:
-        data = json.loads ( url.read ( ).decode ( ) )
+        data = json.loads ( url.read ( ).decode ( "utf8" , "replace" ) )
+        data = str( data ).replace( ", ", ',\n' )
         print ( data )
-        with open ( 'data.txt' , 'a' ) as name:
-            name.write ( str ( data ) + '\n' )
+        with open ( 'data.txt' , 'a' , encoding='utf8' ) as name:
+            name.write ( str(datetime.datetime.now( ) ) + '\n' + str ( data ) + '\n\n' )
 
 
 
